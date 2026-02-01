@@ -189,10 +189,10 @@ function M.new(
       return
     end
 
-    local ms_threshold = config.ms_roll_threshold()
-    local ms_roll = max == ms_threshold
+    local sr_threshold = config.sr_roll_threshold()
+    local sr_roll = max == sr_threshold
 
-    if not ms_roll then
+    if not sr_roll then
       chat.info( m.msg.invalid_sr_roll( player.name, player.class, item.link, "/roll", roll ) )
       controller.roll_was_ignored( player.name, player.class, roll_type, roll, "Didn't /roll." )
       return
@@ -249,7 +249,7 @@ function M.new(
     local ressed_by = m.prettify_table( map( players, format_name_with_rolls ) )
 
     if player_count ~= item_count then
-      chat.announce( string.format( "Roll for %s%s: SR by %s%s", count_str, item.link, ressed_by, x_rolls_win ), true )
+      chat.announce( string.format( "Roll for %s%s: (/roll %s) SR by %s%s", count_str, item.link, config.sr_roll_threshold(), ressed_by, x_rolls_win ), true )
       accept_rolls()
       return
     end

@@ -81,6 +81,7 @@ function M.new( roll_controller, softres, config )
       st = data.strategy_type,
       sr = sr_players,
       th = {
+		sr = config.sr_roll_threshold(),
         ms = config.ms_roll_threshold(),
         os = config.os_roll_threshold(),
         tm = tmog_rolling_enabled and config.tmog_roll_threshold() or 0

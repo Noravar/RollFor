@@ -328,6 +328,7 @@ function M.new( popup_builder, awarded_loot, version_broadcast, event_bus, confi
       e.create_config( "Rolling popup lock", "rolling_popup_lock", "checkbox", "Locks the rolling popup position.", notify )
       e.create_config( "Show Raid roll again button", "raid_roll_again", "checkbox", nil, notify )
       e.create_config( "Show player roles", "show_player_roles", "checkbox", "Show player roles in rolling popup" )
+	  e.create_config( "SoftRes rolling threshold", "sr_roll_threshold", "number" )
       e.create_config( "MainSpec rolling threshold", "ms_roll_threshold", "number" )
       e.create_config( "OffSpec rolling threshold", "os_roll_threshold", "number" )
       this.tmog_rolling_enabled = e.create_config( "Enable transmog rolling", "tmog_rolling_enabled", "checkbox", nil, function( value )

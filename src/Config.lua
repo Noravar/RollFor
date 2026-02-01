@@ -57,9 +57,10 @@ function M.new( db, event_bus )
   end
 
   local function init()
+	if not db.sr_roll_threshold then db.sr_roll_threshold = 101 end
     if not db.ms_roll_threshold then db.ms_roll_threshold = 100 end
     if not db.os_roll_threshold then db.os_roll_threshold = 99 end
-    if not db.tmog_roll_threshold then db.tmog_roll_threshold = 98 end
+    if not db.tmog_roll_threshold then db.tmog_roll_threshold = 50 end
     if not db.superwow_auto_loot_coins then db.superwow_auto_loot_coins = true end
     if db.tmog_rolling_enabled == nil then db.tmog_rolling_enabled = true end
     if db.auto_tmog == nil then db.auto_tmog = false end
@@ -121,6 +122,7 @@ function M.new( db, event_bus )
   end
 
   local function print_roll_thresholds()
+	local sr_threshold = db.sr_roll_threshold
     local ms_threshold = db.ms_roll_threshold
     local os_threshold = db.os_roll_threshold
     local tmog_threshold = db.tmog_roll_threshold
@@ -240,6 +242,16 @@ function M.new( db, event_bus )
     end
 
     info( string.format( "Usage: %s <rows>", hl( "/rf config master-loot-frame-rows" ) ) )
+  end
+
+  local function configure_sr_threshold( args )
+    for value in string.gmatch( args, "config sr (%d+)" ) do
+      db.sr_roll_threshold = tonumber( value )
+      print_roll_thresholds()
+      return
+    end
+
+    info( string.format( "Usage: %s <threshold>", hl( "/rf config sr" ) ) )
   end
 
   local function configure_ms_threshold( args )
@@ -445,7 +457,7 @@ function M.new( db, event_bus )
   end
 
   local function roll_threshold( roll_type )
-    local threshold = (roll_type == RollType.MainSpec or roll_type == RollType.SoftRes) and db.ms_roll_threshold or
+    local threshold = roll_type == RollType.MainSpec and db.ms_roll_threshold or roll_type == RollType.SoftRes and db.sr_roll_threshold or
         roll_type == RollType.OffSpec and db.os_roll_threshold or
         db.tmog_roll_threshold
     local threshold_str = string.format( "/roll%s", threshold == 100 and "" or string.format( " %s", threshold ) )
@@ -490,6 +502,7 @@ function M.new( db, event_bus )
     lock_minimap_button = lock_minimap_button,
     minimap_button_hidden = get( "minimap_button_hidden" ),
     minimap_button_locked = get( "minimap_button_locked" ),
+	sr_roll_threshold = get( "sr_roll_threshold" ),
     ms_roll_threshold = get( "ms_roll_threshold" ),
     on_command = on_command,
     os_roll_threshold = get( "os_roll_threshold" ),

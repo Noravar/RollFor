@@ -219,8 +219,7 @@ function M.new(
   local function start_rolling()
     local count_str = item_count > 1 and string.format( "%sx", item_count ) or ""
     local tmog_info = tmog_rolling_enabled and string.format( " or /roll %s (TMOG)", config.tmog_roll_threshold() ) or ""
-    local default_ms = config.ms_roll_threshold() ~= 100 and string.format( "%s ", config.ms_roll_threshold() ) or ""
-    local roll_info = string.format( " /roll %s(MS) or /roll %s (OS)%s", default_ms, config.os_roll_threshold(), tmog_info )
+    local roll_info = string.format( " /roll %s (MS) or /roll %s (OS)%s", config.ms_roll_threshold(), config.os_roll_threshold(), tmog_info )
     local info_str = info and info ~= "" and string.format( " %s", info ) or roll_info
     local x_rolls_win = item_count > 1 and string.format( ". %d top rolls win.", item_count ) or ""
 

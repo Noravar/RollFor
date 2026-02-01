@@ -112,15 +112,17 @@ function M.new( chat, players, item, item_count, on_rolling_finished, roll_type,
   ---@param min number
   ---@param max number
   local function on_roll( roller, roll, min, max )
+	local sr_threshold = config.sr_roll_threshold()
     local ms_threshold = config.ms_roll_threshold()
     local os_threshold = config.os_roll_threshold()
     local tmog_threshold = config.tmog_roll_threshold()
 
-    if not rolling or min ~= 1 or (max ~= tmog_threshold and max ~= os_threshold and max ~= ms_threshold) then return end
+    if not rolling or min ~= 1 or (max ~= tmog_threshold and max ~= os_threshold and max ~= ms_threshold and max ~= sr_threshold) then return end
 
+	local sr_roll = max == sr_threshold
     local ms_roll = max == ms_threshold
     local os_roll = max == os_threshold
-    local actual_roll_type = ms_roll and RollType.MainSpec or os_roll and RollType.OffSpec or RollType.Transmog
+    local actual_roll_type = sr_roll and RollType.SoftRes or ms_roll and RollType.MainSpec or os_roll and RollType.OffSpec or RollType.Transmog
 
     local player = find_player( roller.name )
 
