@@ -135,7 +135,7 @@ function M.new( ace_timer, player_info, rolling_popup, config )
           table.insert( buttons, { type = "TMOGRoll", callback = function() m.api.RandomRoll( 1, roll_threshold[ RT.Transmog ] ) end } )
         end
       elseif strategy_type == RS.SoftResRoll or strategy_type == RS.TieRoll then
-        table.insert( buttons, { type = "Roll", callback = function() m.api.RandomRoll( 1, 100 ) end } )
+        table.insert( buttons, { type = "Roll", callback = function() m.api.RandomRoll( 1, roll_threshold[ RT.Sr ] ) end } )
       end
     end
 
@@ -258,7 +258,7 @@ function M.new( ace_timer, player_info, rolling_popup, config )
       elseif m.find( player_info.get_name(), data.softressing_players, 'name' ) then
         player_can_roll = true
         if config.client_auto_roll_sr() then
-          m.api.RandomRoll( 1, data.roll_threshold.ms )
+          m.api.RandomRoll( 1, data.roll_threshold.sr )
         end
       else
         player_can_roll = false
@@ -280,6 +280,7 @@ function M.new( ace_timer, player_info, rolling_popup, config )
 
       show_rolling = true
 
+      roll_threshold.SoftRes = data.roll_threshold.sr
       roll_threshold.MainSpec = data.roll_threshold.ms
       roll_threshold.OffSpec = data.roll_threshold.os
       roll_threshold.Transmog = data.roll_threshold.tmog
