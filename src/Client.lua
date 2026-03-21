@@ -135,7 +135,7 @@ function M.new( ace_timer, player_info, rolling_popup, config )
           table.insert( buttons, { type = "TMOGRoll", callback = function() m.api.RandomRoll( 1, roll_threshold[ RT.Transmog ] ) end } )
         end
       elseif strategy_type == RS.SoftResRoll or strategy_type == RS.TieRoll then
-        table.insert( buttons, { type = "Roll", callback = function() m.api.RandomRoll( 1, roll_threshold[ RT.Sr ] ) end } )
+        table.insert( buttons, { type = "Roll", callback = function() m.api.RandomRoll( 1, roll_threshold[ RT.SoftRes ] ) end } )
       end
     end
 
